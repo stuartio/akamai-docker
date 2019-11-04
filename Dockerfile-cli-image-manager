@@ -1,0 +1,16 @@
+FROM python:2.7-alpine
+
+RUN apk update
+RUN apk add python-dev
+RUN apk add py-pip
+RUN apk add gcc
+RUN apk add musl-dev
+RUN apk add libffi-dev
+RUN apk add openssl-dev
+RUN wget https://github.com/akamai/cli/releases/download/1.1.4/akamai-1.1.4-linux386 -O /usr/local/bin/akamai
+RUN chmod +x /usr/local/bin/akamai
+RUN mkdir /root/.akamai-cli
+COPY config /root/.akamai-cli/config
+RUN akamai install image-manager
+
+ENTRYPOINT /bin/sh
