@@ -1,0 +1,9 @@
+FROM alpine
+
+RUN apk add nodejs
+RUN apk add npm
+RUN wget https://github.com/akamai/cli/releases/download/1.1.4/akamai-1.1.4-linux386 -O /usr/local/bin/akamai
+RUN chmod +x /usr/local/bin/akamai
+RUN mkdir /root/.akamai-cli
+COPY config /root/.akamai-cli/config
+#RUN akamai install property-manager
