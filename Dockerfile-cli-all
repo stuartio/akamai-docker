@@ -1,0 +1,43 @@
+FROM alpine
+
+# Basic Tools
+RUN apk add jq
+
+# Prereq tools
+RUN apk add nodejs
+RUN apk add npm
+RUN apk add python2
+RUN apk add python-dev
+RUN apk add python3
+RUN apk add python3-dev
+RUN apk add py-pip
+RUN apk add musl-dev
+RUN apk add libffi-dev
+RUN apk add openssl-dev
+RUN apk add go
+RUN apk add dep
+
+# Akamai CLI Manager
+RUN wget https://github.com/akamai/cli/releases/download/1.1.4/akamai-1.1.4-linux386 -O /usr/local/bin/akamai
+RUN chmod +x /usr/local/bin/akamai
+RUN mkdir /root/.akamai-cli
+COPY config /root/.akamai-cli/config
+
+# CLI Modules
+RUN akamai install --force property
+RUN akamai install --force property-manager
+RUN akamai install --force purge
+RUN akamai install --force auth
+RUN akamai install --force image-manager
+RUN akamai install --force netstorage
+RUN akamai install --force request-control
+RUN akamai install --force cps
+RUN akamai install --force appsec
+RUN akamai install --force firewall
+RUN akamai install --force visitor-prioritization
+RUN akamai install --force dns
+RUN akamai install --force mpulse
+RUN akamai install --force api-gateway
+RUN akamai install --force edgeworkers
+RUN akamai install --force gtm
+RUN akamai install --force adaptive-acceleration
